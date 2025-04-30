@@ -6,11 +6,12 @@ import {
     RocketIcon,
     Share1Icon,
 } from "@radix-ui/react-icons";
-import Script from "next/script";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Metadata, ResolvingMetadata } from "next";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { humanDuration, humanSize } from "@/lib/utils";
+import { SITENAME } from "@/lib/constants";
+import Script from "next/script";
 
 import { Button } from "@/components/ui/button";
 import CopyButton from "@/components/copy-button";
@@ -18,7 +19,6 @@ import LikeButton from "@/components/like-button";
 import Link from "next/link";
 import MessageBox from "@/components/message-box";
 import React from "react";
-import { SITENAME } from "@/lib/constants";
 import SearchCardList from "@/components/search/search-list";
 import doodstream from "@/lib/doodstream";
 
@@ -40,8 +40,8 @@ export async function generateMetadata(
     }
 
     const file = data.result[0];
-    const title = `${file.title} - ${SITENAME}`;
-    const description = `${file.title} di ${SITENAME} Video Bokep Indo Jepang Jav Barat Simontok Viral Terbaru Bocil Ngentot Jilbab Smp Mama Sma`;
+    const title = `Bokep ${file.title}`;
+    const description = `Video Bokep ${file.title} di ${SITENAME} Video Bokep Indo Bocil Ngentot Jilbab Smp Mama Viral`;
     const image = file.splash_img;
     const previousOgImages = (await parent).openGraph?.images || [];
     const previousTwImages = (await parent).twitter?.images || [];
@@ -58,11 +58,11 @@ export async function generateMetadata(
             title,
             description,
             images: [...previousOgImages, image],
-            url: `/v/${file.filecode}`,
+            url: `/v/${file.filecode}#${file.title}`,
             type: `article`,
         },
         alternates: {
-            canonical: `/v/${file.filecode}`,
+            canonical: `/v/${file.filecode}#${file.title}`,
         },
     };
 }
@@ -82,33 +82,13 @@ export default async function Video({ params }: PageProps) {
     }
 
     const file = data.result[0];
-const jsonLd = {
+	const jsonLd = {
         '@context': 'https://schema.org',
-        '@type': 'VideoObject',
-        name: `${file.title} - ${SITENAME}`,
-        thumbnailUrl: file.splash_img,
-        description: `${file.title} di ${SITENAME} Video Bokep Indo Jepang Jav Barat Simontok Viral Terbaru Bocil Ngentot Jilbab Smp Mama Sma`,
-        url: `https://bocilmama.pages.dev/v/${file.filecode}`,
-        embedUrl: `https://${upstream}/e/${file.filecode}`,
-        uploadDate: new Date(
-            file.uploaded + ".000Z"
-        ).toISOString(),
-        interactionStatistic: {
-            '@type': `InteractionCounter`,
-                userInteractionCount: `${file.views}`,
-            interactionType: {
-                '@type': `WatchAction`,
-                target: `https://bocilmama.pages.dev/v/${file.filecode}`
-            }  
-        }
-        }
-        const jsonLd2 = {
-        '@context': 'https://schema.org',
-        '@type': 'Article',
-        headline: `${file.title} - ${SITENAME}`,
+        '@type': 'WebPage',
+        name: `Bokep ${file.title}`,
         image: file.splash_img,
-        description: `${file.title} di ${SITENAME} Video Bokep Indo Jepang Jav Barat Simontok Viral Terbaru Bocil Ngentot Jilbab Smp Mama Sma`,
-        url: `https://bocilmama.pages.dev/v/${file.filecode}`,
+        description: `Video Bokep ${file.title} di ${SITENAME} Video Bokep Indo Bocil Ngentot Jilbab Smp Mama Viral`,
+        url: `https://bocilmama.pages.dev/v/${file.filecode}#${file.title}`,
         datePublished: new Date(
             file.uploaded + ".000Z"
         ).toISOString(),
@@ -120,31 +100,48 @@ const jsonLd = {
                 '@type': 'Person',
                 name: 'admin',
                 url: 'https://bocilmama.pages.dev'
-              },
+              }
+        }
+        const jsonLd2 = {
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        headline: `Bokep ${file.title}`,
+        image: file.splash_img,
+        description: `Video Bokep ${file.title} di ${SITENAME} Video Bokep Indo Bocil Ngentot Jilbab Smp Mama Viral`,
+        url: `https://bocilmama.pages.dev/v/${file.filecode}#${file.title}`,
+        datePublished: new Date(
+            file.uploaded + ".000Z"
+        ).toISOString(),
+        publisher: {
+            '@type': 'Organization',
+            name: `${SITENAME}`,
+            logo: 'https://bocilmama.pages.dev/favicon.ico'},
+        author: {
+                '@type': 'Person',
+                name: 'admin',
+                url: 'https://bocilmama.pages.dev'},
         interactionStatistic: {
             '@type': `InteractionCounter`,
                 userInteractionCount: `${file.views}`,
             interactionType: {
                 '@type': `ReadAction`,
-                target: `https://bocilmama.pages.dev/v/${file.filecode}`
+                target: `https://bocilmama.pages.dev/v/${file.filecode}#${file.title}`
             }  
         }
         }
-        const jsonLd3 = {
-            '@context': 'https://schema.org', 
-            '@type': 'Book', 
-            'name': `${file.title} - ${SITENAME}`, 
-            'aggregateRating': {
-            '@type': 'AggregateRating',	
-                'ratingValue': '5',	
-                'ratingCount': `${file.views}`,	
-                'bestRating': '5',	
-                'worstRating': '1' }
-        }
+        
     return (
-        <div className="grid col-span-full gap-4 md:gap-4 md:mx-10">
+        <div className="grid col-span-full gap-4 md:gap-4 md:mx-10" itemProp="video" itemScope itemType="http://schema.org/VideoObject">
+<meta itemProp="author" content="admin" />
+<meta itemProp="name" content={`Bokep ${file.title}`} />
+<meta itemProp="description" content={`Video Bokep ${file.title} di ${SITENAME} Video Bokep Indo Bocil Ngentot Jilbab Smp Mama Viral`} />
+<meta itemProp="duration" content={`${file.length}`} />
+<meta itemProp="thumbnailUrl" content={`${file.splash_img}`} />
+<meta itemProp="embedURL" content={`https://doodstream.com/e/${file.filecode}#${file.title}`} />
+<meta itemProp="uploadDate" content={`${new Date(
+            file.uploaded + ".000Z"
+        ).toISOString()}`} />
         <section>
-<Script src="https://js.juicyads.com/jp.php?c=947403z2v256s2x2x294z2b4&u=http%3A%2F%2Fwww.juicyads.rocks"/>
         {/* Add JSON-LD to your page */}
         <script
           type="application/ld+json"
@@ -154,15 +151,11 @@ const jsonLd = {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd2) }}
         />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd3) }}
-        />
         {/* ... */}
         </section>
             <iframe
                 className="w-full h-[30vh] md:h-[55vh] lg:h-[70vh]"
-                src={`https://${upstream}/e/${file.filecode}`}
+                src={`https://doodstream.com/e/${file.filecode}`}
                 scrolling="no"
                 title={file.title}
                 frameBorder={0}
@@ -171,16 +164,22 @@ const jsonLd = {
             <Card className="mx-2 mb-8">
                 <CardHeader>
                     <CardTitle className="text-xl md:text-3xl font-bold">
-                        {file.title}
+                        Bokep {file.title}
                     </CardTitle>
                 </CardHeader>
-                
-            </Card>
-            <p>{file.title} di {SITENAME} Video Bokep Indo Jepang Jav Barat Simontok Viral Terbaru Bocil Ngentot Jilbab Smp Mama Sma korea china tante live paksa ngentot abg cewek pijat pelajar Hijab Abg Colmek Film Tante Hot Twitter Asia Download Live stw <a href="https://bocilmama.pages.dev/c/1379174">Bokep Bocil</a> situs bokep indonesia jepang barat korea japan jav cina japanese <a href="https://bocilmama.pages.dev/c/485581">Bokep Indo</a> china rusia arab india thailand nonton link sd crot playbokep simontok bokepin montok baru perawan anak kecil <a href="https://bocilmama.pages.dev/c/1379173">Bokep Jepang</a> telegram selingkuh ojol cantik gay vidio lokal artis pelajar janda streaming <a href="https://bocilmama.pages.dev/c/1379183">Bokep Perkosa</a> hd anime hentai bokepind gudang avtub pijat sotwe <a href="https://bocilmama.pages.dev/c/1379179">Bokep Jilbab</a> rumah pemerkosaan inggris xpanas pure tobrut vcs ngintip binor remaja yandex update <a href="https://bocilmama.pages.dev/c/1379181">Bokep Smp</a> perselingkuhan wiki raja full com porno indoh</p>
+		<CardContent><center><Script
+      dangerouslySetInnerHTML={{__html: `(adsbyjuicy = window.adsbyjuicy || []).push({'adzone':1052551})`,}}
+   /><Script strategy="lazyOnload" data-cfasync="false" async src="https://poweredby.jads.co/js/jads.js"/><ins id="1052551" data-width="300" data-height="262"></ins></center>
+       		     <p>Video Bokep {file.title} di {SITENAME} Video Bokep Indo Bocil Ngentot Jilbab Smp Mama Viral Sma Tante Live Paksa Bokep Abg Jepang Jav Barat Korea China Terbaru Video Bokep Indo Jepang Jav Barat Simontok Viral Terbaru Bocil Ngentot Jilbab Smp Mama Sma hub sotwe olmek avtube pijat pure gudang pemerkosaan rumah tobrut inggris ngintip vcs binor yandex update remaja {SITENAME} wiki raja bokeptube full porno bocilmamama simontok bokepind playbokep indobokep xpanasonline indoh janda streaming jepang barat korea japan jav cina japanese china rusia arab india thailand hd anime hentai bokepind gudang avtub pijat sotwe rumah pemerkosaan inggris xpanas pure tobrut vcs ngintip binor remaja yandex update perselingkuhan wiki raja full com porno indoh</p>
+		</CardContent>
+            </Card><Script
+		dangerouslySetInnerHTML={{__html: `(adsbyjuicy = window.adsbyjuicy || []).push({'adzone':1052552})`,}}
+   /><Script data-cfasync="false" async src="https://poweredby.jads.co/js/jads.js"/><ins id="1052552" data-width="300" data-height="262"></ins>
+<Script src="https://js.juicyads.com/jp.php?c=947403z2v256s2x2w264x294&u=http%3A%2F%2Fwww.juicyads.rocks"/>
             <h2 className="text-2xl font-bold text-center my-4">
-                Related Video {file.title}
+                Related Video Bokep {file.title}
             </h2>
-            <SearchCardList query={file.title.split(" ")[1]} />
+            <SearchCardList query={file.title.split(" ")[2]} />
         </div>
     );
 }
