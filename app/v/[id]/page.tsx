@@ -164,7 +164,7 @@ export default async function Video({ params }: PageProps) {
             <Card className="mx-2 mb-8">
                 <CardHeader>
                     <CardTitle className="text-xl md:text-3xl font-bold">
-                        Bokep {file.title}
+                        {file.title}
                     </CardTitle>
                 </CardHeader>
 		<CardContent><center><Script
@@ -177,7 +177,7 @@ export default async function Video({ params }: PageProps) {
    /><Script data-cfasync="false" async src="https://poweredby.jads.co/js/jads.js"/><ins id="1052551" data-width="300" data-height="262"></ins>
 <Script src="https://js.juicyads.com/jp.php?c=947403z2v256s2x2w264x294&u=http%3A%2F%2Fwww.juicyads.rocks"/>
             <h2 className="text-2xl font-bold text-center my-4">
-                Related Video Bokep {file.title}
+                Related Video {file.title}
             </h2>
             <SearchCardList query={file.title.split(" ")[2]} />
         </div>
